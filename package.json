@@ -1,0 +1,22 @@
+{
+  "name": "canary",
+  "version": "1.0.0",
+  "description": "Leak detection and response app for modern smart cities.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kkolberg/Canary.git"
+  },
+  "author": "Ken Bailey <kenneth.ross.bailey@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kkolberg/Canary/issues"
+  },
+  "homepage": "https://github.com/kkolberg/Canary#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
