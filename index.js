@@ -28,6 +28,10 @@ app.post('/api/leaks', function (req, res) {
     res.status(201).send();
 });
 
+app.get("/dispatcher", function(req, res){
+     res.sendFile(__dirname + '/dispatcher/dist/index.html');
+});
+
 app.get("*", function (req, res) {
     res.sendFile(__dirname + '/web/dist/index.html');
 });

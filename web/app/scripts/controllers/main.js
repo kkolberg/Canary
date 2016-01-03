@@ -114,8 +114,4 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 			remoteMedia: $('#remote')[0]
 		});
 	});
-    phone.on('call:connected', function () {
-		alert('tree');
-	});
-
 });
