@@ -46,7 +46,7 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		$timeout(function () {
 			var audio2 = new Audio('audio/pipe.wav');
 			audio2.play();
-
+			$scope.dispatcher.sent = true;
 			$timeout(function () {
 				var audio3 = new Audio('audio/underworld - cut.mp3');
 				audio3.play();
@@ -64,6 +64,8 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 			audio2.play();
 		}, 1000);
 	};
+
+	$scope.dispatcher = { sent: false };
 
 	$scope.markArea = function () {
 		ApiService.areas.mark(true);
