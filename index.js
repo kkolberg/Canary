@@ -1,10 +1,22 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 
-app.use(express.static('web'));
+var leaks = {
+    pipe1: false
+};
 
-app.get('/api', function (req, res) {
-    res.send('Hello Canary API!');
+app.use(express.static('web'));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+app.get('/api/leaks', function (req, res) {
+    res.status(200).send(leaks);
+});
+
+app.post('/api/leaks', function (req, res) {
+    leaks[req.body.pipe] = req.body.isLeaking;
+    res.status(201).send();
 });
 
 app.listen(3000, function () {
