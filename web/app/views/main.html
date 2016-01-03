@@ -20,8 +20,8 @@
 	
 	<button ng-click="audioDispatch(); changeStep('chat');" ng-show="flow.step==='dispatch'">Dispatch</button>
 	<button ng-click="callDispatcher(); changeStep('endcall');" ng-show="flow.step==='chat'">Chat</button>
-	<button ng-click="hangup(); changeStep('resolve');" ng-show="flow.step==='endcall'">end call</button>
-	<button ng-click="resolve(); changeStep('dispatch') " ng-show="flow.step==='resolve'">Resolve</button>
+	<button ng-click="hangup(); changeStep('chat');" ng-show="flow.step==='endcall'">end call</button>
+	<button ng-click="resolve(); changeStep('dispatch') " ng-show="flow.step==='chat' || flow.step==='endcall'">Resolve</button>
 </div>
 <div ng-hide="hide.video">
 	<video id="local" style="width:320px;"></video>
