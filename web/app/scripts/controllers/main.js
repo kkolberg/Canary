@@ -17,14 +17,12 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 
 	var pollingLeaks = function () {
 		ApiService.pipes.get().then(function (result) {
-			var isLeaking = result.data.pipe1.isLeaking;
+			var isLeaking = result.data.pipe1;
 
 			if (pipe1Leaking !== isLeaking) {
 				if (isLeaking) {
 					$scope.audioPipeBurst();
 					$scope.hide.leakAlert = false;
-				} else {
-					$scope.audioFix();
 				}
 
 				pipe1Leaking = isLeaking;
@@ -32,7 +30,14 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		});
 	};
 
-	var polling = $interval(pollingLeaks, 1000);
+	var polling = $interval(pollingLeaks, 2500);
+
+	$scope.resolve = function () {
+		ApiService.pipes.fix();
+		$scope.audioFix();
+		$scope.hide.leakAlert = true;
+
+	};
 
 	$scope.audioPipeBurst = function () {
 		var audio = new Audio('audio/warning.wav');
@@ -46,7 +51,6 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		$timeout(function () {
 			var audio2 = new Audio('audio/pipe.wav');
 			audio2.play();
-
 			$timeout(function () {
 				var audio3 = new Audio('audio/underworld - cut.mp3');
 				audio3.play();
@@ -65,9 +69,15 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		}, 1000);
 	};
 
+	$scope.flow = { step: "dispatch" };
+
 	$scope.markArea = function () {
 		ApiService.areas.mark(true);
 	};
+
+	$scope.changeStep = function (nextStep) {
+		$scope.flow.step = nextStep;
+	}
 
 	$scope.callDispatcher = function () {
 		dailThePhone();
@@ -84,8 +94,29 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		leakAlert: true
 	};
 
+	$scope.webrtc = {
+		error: false,
+		restarting: false
+	};
+
 	$scope.imageMode = {
 		mode: "city"
+	};
+
+	var initWebRtc = function () {
+		$http.get('https://www.attwebrtc.com/hackathon/demo/dhs/config.php').then(function (result) {
+			myDHS = result.data;
+			getAccessToken();
+		});
+	};
+
+	initWebRtc();
+
+
+	$scope.restartWebRTC = function () {
+		$scope.webrtc.error = false;
+		$scope.webrtc.restarting = true;
+		initWebRtc();
 	};
 
 
@@ -115,9 +146,8 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		});
 	};
 
-	$http.get('https://www.attwebrtc.com/hackathon/demo/dhs/config.php').then(function (result) {
-		myDHS = result.data;
-		getAccessToken();
 
+	phone.on('error', function () {
+		$scope.webrtc.error = true;
 	});
 });
