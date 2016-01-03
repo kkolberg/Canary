@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('canaryApp').factory('ApiService', ['$http', '$q', function ($http, $q) {
-    var baseApiUrl = 'http://google.com/';
+    var baseApiUrl = 'http://localhost:3000';
 
     function get(path, params) {
         var q = $q.defer();
@@ -23,13 +23,17 @@ angular.module('canaryApp').factory('ApiService', ['$http', '$q', function ($htt
         return q.promise;
     }*/
 
-    var score = {
+    var pipes = {
         get: function () {
-            return get('');
+            return get('/api/leaks').then(function(result){
+               return result;
+            }, function(result){
+                
+            });
         }
     };
 
     return {
-        score: score
+        pipes: pipes
     };
 }]);

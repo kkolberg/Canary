@@ -20,7 +20,7 @@ app.post('/api/leaks', function (req, res) {
 });
 
 app.get("*", function (req, res) {
-    res.sendFile('/web/dist/index.html' , { root : __dirname});
+    res.sendFile(__dirname+'/web/dist/index.html');
 });
 
 app.listen(3000, function () {
