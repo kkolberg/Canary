@@ -64,7 +64,9 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		}, 1000);
 	};
 
-
+	$scope.markArea = function () {
+		ApiService.areas.mark(true);
+	};
 
 	$scope.callDispatcher = function () {
 		dailThePhone();
@@ -73,6 +75,7 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 	$scope.hangup = function () {
 		phone.hangup();
 	};
+
 
 
 	var getAccessToken = function () {
@@ -94,7 +97,7 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 
 	var dailThePhone = function () {
 		phone.dial({
-			destination: phone.cleanPhoneNumber("canaryDispatch"+myDHSURL),
+			destination: phone.cleanPhoneNumber("canaryDispatch" + myDHSURL),
 			mediaType: 'video',
 			localMedia: $('#local')[0],
 			remoteMedia: $('#remote')[0]

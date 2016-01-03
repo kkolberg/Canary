@@ -28,8 +28,14 @@ app.post('/api/leaks', function (req, res) {
     res.status(201).send();
 });
 
-app.get("/dispatcher", function(req, res){
-     res.sendFile(__dirname + '/dispatcher/dist/index.html');
+app.post('/api/areas/mark', function (req, res) {
+    var isBad = req.body.isBad;
+    console.log("marked area isBad:" + isBad);
+    res.status(201).send();
+});
+
+app.get("/dispatcher", function (req, res) {
+    res.sendFile(__dirname + '/dispatcher/dist/index.html');
 });
 
 app.get("*", function (req, res) {

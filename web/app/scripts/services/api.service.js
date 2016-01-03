@@ -13,7 +13,7 @@ angular.module('canaryApp').factory('ApiService', ['$http', '$q', function ($htt
         return q.promise;
     }
 
-    /*function post(path, postData) {
+    function post(path, postData) {
         var q = $q.defer();
         $http.post(baseApiUrl + path, postData).then(function (data) {
             q.resolve(data);
@@ -21,19 +21,22 @@ angular.module('canaryApp').factory('ApiService', ['$http', '$q', function ($htt
             q.reject(err);
         });
         return q.promise;
-    }*/
+    }
 
     var pipes = {
         get: function () {
-            return get('/api/leaks').then(function(result){
-               return result;
-            }, function(result){
-                
-            });
+            return get('/api/leaks');
+        }
+    };
+
+    var areas = {
+        mark: function (isBad) {
+            return post('/api/areas/mark', JSON.stringify({ isBad: isBad }));
         }
     };
 
     return {
-        pipes: pipes
+        pipes: pipes,
+        areas: areas
     };
 }]);
