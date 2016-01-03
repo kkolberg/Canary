@@ -84,8 +84,29 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		leakAlert: true
 	};
 
+	$scope.webrtc = {
+		error: false,
+		restarting: false
+	};
+
 	$scope.imageMode = {
 		mode: "city"
+	};
+
+	var initWebRtc = function () {
+		$http.get('https://www.attwebrtc.com/hackathon/demo/dhs/config.php').then(function (result) {
+			myDHS = result.data;
+			getAccessToken();
+		});
+	};
+
+	initWebRtc();
+
+
+	$scope.restartWebRTC = function () {
+		$scope.webrtc.error = false;
+		$scope.webrtc.restarting = true;
+		initWebRtc();
 	};
 
 
@@ -115,9 +136,8 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		});
 	};
 
-	$http.get('https://www.attwebrtc.com/hackathon/demo/dhs/config.php').then(function (result) {
-		myDHS = result.data;
-		getAccessToken();
 
+	phone.on('error', function () {
+		$scope.webrtc.error = true;
 	});
 });
