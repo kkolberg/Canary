@@ -11,7 +11,7 @@
 	</div>
 
 </div>
-<div class="main" ng-class="{ 'city-city' : imageMode.mode == 'city', 'city-pipes': imageMode.mode == 'pipes' }">
+<div class="main" ng-class="{ 'city-city' : imageMode.mode == 'city', 'city-pipes': imageMode.mode == 'pipes', 'city-alert': !hide.leakAlert }">
 	<button ng-click="imageMode.mode='pipes'" class="button-pipes" ng-class="{ 'city-selected': imageMode.mode == 'pipes' }">pipes</button>
 	<button ng-click="imageMode.mode='city'" class="button-city" ng-class="{ 'city-selected': imageMode.mode == 'city' }">city</button>
 </div>
