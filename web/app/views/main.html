@@ -1,7 +1,7 @@
 <div class="header">
-	<div class="logo"></div>
+	<div class="logo">Canary</div>
 	<div class="user">
-		<div style="width: 60px; height: 60px; margin: 8px; background: #fff; float: left;"></div>
+		<div class="avatar"></div>
 		<div style="text-align: left; padding: 8px; font-size: 20px; position: relative; top: 8px;">Jason Kuykendall</div>
 		<div style="text-align: left; padding: 8px; font-size: 14px; position: relative; top: -12px;">Las Vegas, NV</div>
 	</div>
@@ -15,7 +15,7 @@
 	<button ng-show="hide.leakAlert" ng-click="imageMode.mode='pipes'" class="button-pipes" ng-class="{ 'city-selected': imageMode.mode == 'pipes' }">pipes</button>
 	<button ng-show="hide.leakAlert" ng-click="imageMode.mode='city'" class="button-city" ng-class="{ 'city-selected': imageMode.mode == 'city' }">city</button>
 	<div  ng-hide="hide.leakAlert" style="position: absolute; top: 240px; left: 540px; width: 400px; background: #fff; -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75); -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75); box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);">
-		<div style="border-bottom: 1px solid #ddd; padding: 20px; text-align: center; font-weight: bold;">Section 2134</div>
+		<div style="border-bottom: 1px solid #ddd; padding: 20px; text-align: center; font-weight: bold;"><img src="images/exclamation.png" style="float: left; width: 20px;" /> Section 2134</div>
 		<div style="border-bottom: 1px solid #ddd; padding: 20px; text-align: center;">Soute Avenue NE</div>
 		<div style="border-bottom: 1px solid #ddd; padding: 20px; text-align: center;" ng-hide="flow.step==='dispatch'">Crew Dispatched</div>
 		<div style="border-bottom: 1px solid #ddd; padding: 20px; text-align: center;" ng-hide="true">Leak Resolved</div>
@@ -33,7 +33,7 @@
 		<video id="local" style="width:100%; height: 100%;"></video>
 	</div>
 	<div class="web-rtc-info-panel" style="">
-		<div style="font-size: 20px; color: #990000; border-bottom: 1px solid #ddd; padding: 20px;">Leak Detected - Severe</div>
+		<div style="font-size: 20px; color: #990000; border-bottom: 1px solid #ddd; padding: 20px;"><img src="images/exclamation.png" width="40px" /> Leak Detected - Severe</div>
 		<div style="font-size: 20px; color: #666; border-bottom: 1px solid #ddd; padding: 20px;">Section 2134</div>
 		<div style="font-size: 20px; color: #666; border-bottom: 1px solid #ddd; padding: 20px;">Crew Dispatched</div>
 	</div>
@@ -41,7 +41,7 @@
 <div class="footer" ng-hide="hide.leakAlert">
 	<div style="float: left; padding: 10px;">
 		<div style="background: #fff; padding: 16px 20px; font-size: 30px; line-height: 30px; color: #990000; border-radius: 4px;">
-			Leak Detected - Severe
+			<img src="images/exclamation.png" width="40px" /> Leak Detected - Severe
 		</div>
 	</div>
 	<div style="float: right; padding: 20px;">

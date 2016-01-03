@@ -13,7 +13,20 @@ button {
 .logo {
 	width: 300px;
 	height: 80px;
-	background: #abcdef;
+	background: url(../images/logo.png) 10px 10px;
+	background-repeat: no-repeat;
+	background-size: 60px 60px;
+	color: #ffdf01;
+	font-size: 48px;
+	padding: 4px 0px 0px 30px;
+	float: left;
+}
+.avatar {
+	width: 60px;
+	height: 60px;
+	margin: 8px;
+	background: url(../images/seal.png) center center no-repeat;
+	background-size: contain;
 	float: left;
 }
 .user {
