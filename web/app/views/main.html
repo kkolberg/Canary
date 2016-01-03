@@ -1,39 +1,62 @@
-<div ng-show="true || webrtc.error">WebRTC is down.
-	<a ng-click="restartWebRTC()">Click here</a> to reinitiate it.
-	
+<div class="header">
+	<div class="logo"></div>
+	<div class="user">
+		<div style="width: 60px; height: 60px; margin: 8px; background: #fff; float: left;"></div>
+		<div style="text-align: left; padding: 8px; font-size: 20px; position: relative; top: 8px;">Jason Kuykendall</div>
+		<div style="text-align: left; padding: 8px; font-size: 14px; position: relative; top: -12px;">Las Vegas, NV</div>
 	</div>
-	
-	<div>
-		<img src="" />
-		City Dashboard
+
+	<div ng-show="webrtc.error">WebRTC is down.
+		<a ng-click="restartWebRTC()">Click here</a> to reinitiate it.
 	</div>
-	
 
-
-<button ng-click="imageMode.mode='city'">city</button>
-<button ng-click="imageMode.mode='pipes'">pipes</button>
-<img src="/images/city.png" ng-if="imageMode.mode === 'city'" />
-<img src="/images/pipes.png" ng-if="imageMode.mode === 'pipes'" />
-
-
-<div ng-show="webrtc.error">
-	WebRTC is down. <a on-click="restartWebRTC()">Click here</a> to reinitiate it.
 </div>
+<div class="main" ng-class="{ 'city-city' : imageMode.mode == 'city', 'city-pipes': imageMode.mode == 'pipes' }">
+	<button ng-click="imageMode.mode='pipes'" class="button-pipes" ng-class="{ 'city-selected': imageMode.mode == 'pipes' }">pipes</button>
+	<button ng-click="imageMode.mode='city'" class="button-city" ng-class="{ 'city-selected': imageMode.mode == 'city' }">city</button>
+</div>
+<div class="web-rtc" ng-hide="hide.video">
+	<div class="web-rtc-banner">
+		<button ng-click="hangup(); changeStep('chat');" ng-show="true" class="btn" style="float: right; margin: 20px;">end call</button>
+		<div style="font-size: 24px; padding: 20px;">Crew Member: Korey Kolberg</div>
+	</div>
+	<div class="web-rtc-remote">
+		<video id="remote" style="width:100%; height:100%;"></video>
+	</div>
+	<div class="web-rtc-local">
+		<video id="local" style="width:100%; height: 100%;"></video>
+	</div>
+	<div class="web-rtc-info-panel" style="">
+		<div style="font-size: 20px; color: #990000; border-bottom: 1px solid #ddd; padding: 20px;">Leak Detected - Severe</div>
+		<div style="font-size: 20px; color: #666; border-bottom: 1px solid #ddd; padding: 20px;">Section 2134</div>
+		<div style="font-size: 20px; color: #666; border-bottom: 1px solid #ddd; padding: 20px;">Crew Dispatched</div>
+	</div>
+</div>
+<div class="footer">
+	<div style="float: left; padding: 10px;">
+		<div style="background: #fff; padding: 16px 20px; font-size: 30px; line-height: 30px; color: #990000; border-radius: 4px;">
+			Leak Detected - Severe
+		</div>
+	</div>
+	<div style="float: right; padding: 20px;">
+		<button ng-click="audioDispatch(); changeStep('chat');" ng-show="flow.step==='dispatch'" class="btn">Dispatch</button>
+		<button ng-click="callDispatcher(); changeStep('endcall');" ng-show="flow.step==='chat'" class="btn">Talk To Crew</button>
+		<button ng-click="resolve(); changeStep('dispatch') " ng-show="flow.step==='chat' || flow.step==='endcall'" class="btn">Resolve Event</button>
+	</div>
+</div>
+
+
+
+
+
+
+
 
 <div ng-hide="hide.leakAlert">
 	<div>Section 2134</div>
 	<div>South Avenue NE</div>
 	
-	<button ng-click="audioDispatch(); changeStep('chat');" ng-show="flow.step==='dispatch'">Dispatch</button>
-	<button ng-click="callDispatcher(); changeStep('endcall');" ng-show="flow.step==='chat'">Chat</button>
-	<button ng-click="hangup(); changeStep('chat');" ng-show="flow.step==='endcall'">end call</button>
-	<button ng-click="resolve(); changeStep('dispatch') " ng-show="flow.step==='chat' || flow.step==='endcall'">Resolve</button>
+	
+	
+	
 </div>
-
-<div ng-hide="hide.video">
-	<video id="local" style="width:320px;"></video>
-	</br>
-	<video id="remote" style="width:320px;"></video>
-</div>
-
-
