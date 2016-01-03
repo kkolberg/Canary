@@ -6,8 +6,8 @@ var leaks = {
     pipe1: false
 };
 
-app.use(express.static('web'));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static('web/app'));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/api/leaks', function (req, res) {
@@ -17,6 +17,10 @@ app.get('/api/leaks', function (req, res) {
 app.post('/api/leaks', function (req, res) {
     leaks[req.body.pipe] = req.body.isLeaking;
     res.status(201).send();
+});
+
+app.get("*", function (req, res) {
+    res.sendFile('/web/dist/index.html' , { root : __dirname});
 });
 
 app.listen(3000, function () {
