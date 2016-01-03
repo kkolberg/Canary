@@ -8,6 +8,12 @@
 <img src="/images/city.png" ng-if="imageMode.mode === 'city'" />
 <img src="/images/pipes.png" ng-if="imageMode.mode === 'pipes'" />
 
+
+<div ng-show="webrtc.error">
+	WebRTC is down. <a on-click="restartWebRTC()">Click here</a> to reinitiate it.
+</div>
+
+
 <div ng-hide="hide.leakAlert">oh no!!!</div>
 
 <div ng-hide="hide.video">
