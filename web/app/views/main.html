@@ -1,10 +1,17 @@
-<button ng-click="markArea()">mark Area</button>
-<button ng-click="audioDispatch()">Send person</button>
-<button ng-click="callDispatcher()">call person</button>
-<button ng-click="hangup()">end call</button>
+<div ng-show="true || webrtc.error">WebRTC is down.
+	<a ng-click="restartWebRTC()">Click here</a> to reinitiate it.
+	
+	</div>
+	
+	<div>
+		<img src="" />
+		City Dashboard
+	</div>
+	
+
+
 <button ng-click="imageMode.mode='city'">city</button>
 <button ng-click="imageMode.mode='pipes'">pipes</button>
-
 <img src="/images/city.png" ng-if="imageMode.mode === 'city'" />
 <img src="/images/pipes.png" ng-if="imageMode.mode === 'pipes'" />
 
@@ -13,11 +20,20 @@
 	WebRTC is down. <a on-click="restartWebRTC()">Click here</a> to reinitiate it.
 </div>
 
-
-<div ng-hide="hide.leakAlert">oh no!!!</div>
+<div ng-hide="hide.leakAlert">
+	<div>Section 2134</div>
+	<div>South Avenue NE</div>
+	
+	<button ng-click="audioDispatch(); changeStep('chat');" ng-show="flow.step==='dispatch'">Dispatch</button>
+	<button ng-click="callDispatcher(); changeStep('endcall');" ng-show="flow.step==='chat'">Chat</button>
+	<button ng-click="hangup(); changeStep('chat');" ng-show="flow.step==='endcall'">end call</button>
+	<button ng-click="resolve(); changeStep('dispatch') " ng-show="flow.step==='chat' || flow.step==='endcall'">Resolve</button>
+</div>
 
 <div ng-hide="hide.video">
 	<video id="local" style="width:320px;"></video>
 	</br>
 	<video id="remote" style="width:320px;"></video>
 </div>
+
+
