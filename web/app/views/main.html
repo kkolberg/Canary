@@ -2,6 +2,16 @@
 <button ng-click="audioDispatch()">Send person</button>
 <button ng-click="callDispatcher()">call person</button>
 <button ng-click="hangup()">end call</button>
-<video id="local" style="width:320px;"></video>
-</br>
-<video id="remote" style="width:320px;"></video>
+<button ng-click="imageMode.mode='city'">city</button>
+<button ng-click="imageMode.mode='pipes'">pipes</button>
+
+<img src="/images/city.png" ng-if="imageMode.mode === 'city'" />
+<img src="/images/pipes.png" ng-if="imageMode.mode === 'pipes'" />
+
+<div ng-hide="hide.leakAlert">oh no!!!</div>
+
+<div ng-hide="hide.video">
+	<video id="local" style="width:320px;"></video>
+	</br>
+	<video id="remote" style="width:320px;"></video>
+</div>

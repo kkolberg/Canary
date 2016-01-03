@@ -22,6 +22,7 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 			if (pipe1Leaking !== isLeaking) {
 				if (isLeaking) {
 					$scope.audioPipeBurst();
+					$scope.hide.leakAlert = false;
 				} else {
 					$scope.audioFix();
 				}
@@ -31,7 +32,7 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		});
 	};
 
-	//var polling = $interval(pollingLeaks, 1000);
+	var polling = $interval(pollingLeaks, 1000);
 
 	$scope.audioPipeBurst = function () {
 		var audio = new Audio('audio/warning.wav');
@@ -70,12 +71,22 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 
 	$scope.callDispatcher = function () {
 		dailThePhone();
+		$scope.hide.video = false;
 	};
 
 	$scope.hangup = function () {
 		phone.hangup();
+		$scope.hide.video = true;
 	};
 
+	$scope.hide = {
+		video: true,
+		leakAlert: true
+	};
+
+	$scope.imageMode = {
+		mode: "city"
+	};
 
 
 	var getAccessToken = function () {
@@ -108,13 +119,5 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		myDHS = result.data;
 		getAccessToken();
 
-	});
-
-	phone.on('call:incoming', function () {
-		phone.answer({
-			mediaType: 'video',
-			localMedia: $('#local')[0],
-			remoteMedia: $('#remote')[0]
-		});
 	});
 });
