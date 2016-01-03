@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-    angular.module('homifyApp').factory('ApiService', ApiService);
+    angular.module('canaryApp').factory('ApiService', ApiService);
 
     ApiService.$inject = ['$http', '$q'];
 

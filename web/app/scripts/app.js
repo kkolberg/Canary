@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name homifyApp
+ * @name canaryApp
  * @description
- * # homifyApp
+ * # canaryApp
  *
  * Main module of the application.
  */
 angular
-  .module('homifyApp', [
+  .module('canaryApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',

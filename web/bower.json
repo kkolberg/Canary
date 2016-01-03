@@ -15,7 +15,7 @@
     "angular-mocks": "^1.4.0"
   },
   "appPath": "app",
-  "moduleName": "homifyApp",
+  "moduleName": "canaryApp",
   "overrides": {
     "bootstrap": {
       "main": [
