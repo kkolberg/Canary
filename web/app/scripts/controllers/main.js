@@ -16,6 +16,8 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 			if (pipe1Leaking !== isLeaking) {
 				if (isLeaking) {
 					$scope.audioPipeBurst();
+				}else{
+					$scope.audioFix();
 				}
 
 				pipe1Leaking = isLeaking;
