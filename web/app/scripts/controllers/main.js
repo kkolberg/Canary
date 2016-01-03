@@ -23,8 +23,6 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 				if (isLeaking) {
 					$scope.audioPipeBurst();
 					$scope.hide.leakAlert = false;
-				} else {
-					$scope.audioFix();
 				}
 
 				pipe1Leaking = isLeaking;
@@ -34,8 +32,11 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 
 	var polling = $interval(pollingLeaks, 2500);
 
-	$scope.resetAlarm = function () {
+	$scope.resolve = function () {
 		ApiService.pipes.fix();
+		$scope.audioFix();
+		$scope.hide.leakAlert = true;
+
 	};
 
 	$scope.audioPipeBurst = function () {
@@ -50,7 +51,6 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		$timeout(function () {
 			var audio2 = new Audio('audio/pipe.wav');
 			audio2.play();
-			$scope.dispatcher.sent = true;
 			$timeout(function () {
 				var audio3 = new Audio('audio/underworld - cut.mp3');
 				audio3.play();
@@ -69,11 +69,15 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		}, 1000);
 	};
 
-	$scope.dispatcher = { sent: false };
+	$scope.flow = { step: "dispatch" };
 
 	$scope.markArea = function () {
 		ApiService.areas.mark(true);
 	};
+
+	$scope.changeStep = function (nextStep) {
+		$scope.flow.step = nextStep;
+	}
 
 	$scope.callDispatcher = function () {
 		dailThePhone();

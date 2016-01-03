@@ -8,8 +8,6 @@
 		City Dashboard
 	</div>
 	
-<button ng-click="markArea()">mark Area</button>
-
 
 
 <button ng-click="imageMode.mode='city'">city</button>
@@ -19,13 +17,16 @@
 <div ng-hide="hide.leakAlert">
 	<div>Section 2134</div>
 	<div>South Avenue NE</div>
-	<button ng-click="resetAlarm(); hide.leakAlert=true;">Reset sensor</button>
-	<button ng-click="audioDispatch()" ng-hide="dispatcher.sent">Send person</button>
-	<button ng-click="callDispatcher()" ng-show="dispatcher.sent">call person</button>
-	<button ng-click="hangup()" ng-hide="hide.video">end call</button>
+	
+	<button ng-click="audioDispatch(); changeStep('chat');" ng-show="flow.step==='dispatch'">Dispatch</button>
+	<button ng-click="callDispatcher(); changeStep('endcall');" ng-show="flow.step==='chat'">Chat</button>
+	<button ng-click="hangup(); changeStep('resolve');" ng-show="flow.step==='endcall'">end call</button>
+	<button ng-click="resolve(); changeStep('dispatch') " ng-show="flow.step==='resolve'">Resolve</button>
 </div>
 <div ng-hide="hide.video">
 	<video id="local" style="width:320px;"></video>
 	</br>
 	<video id="remote" style="width:320px;"></video>
 </div>
+
+
