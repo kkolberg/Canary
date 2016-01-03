@@ -28,6 +28,8 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 				pipe1Leaking = isLeaking;
 			}
 		});
+		
+		$scope.hide.leakAlert=false;
 	};
 
 	var polling = $interval(pollingLeaks, 2500);

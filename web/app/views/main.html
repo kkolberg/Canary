@@ -12,13 +12,13 @@
 
 </div>
 <div class="main" ng-class="{ 'city-city' : imageMode.mode == 'city', 'city-pipes': imageMode.mode == 'pipes', 'city-alert': !hide.leakAlert }">
-	<button ng-click="imageMode.mode='pipes'" class="button-pipes" ng-class="{ 'city-selected': imageMode.mode == 'pipes' }">pipes</button>
-	<button ng-click="imageMode.mode='city'" class="button-city" ng-class="{ 'city-selected': imageMode.mode == 'city' }">city</button>
-	<div  ng-hide="hide.leakAlert" style="position: absolute; top: 440px; left: 900px; width: 400px; background: #fff; -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75); -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75); box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);">
+	<button ng-show="hide.leakAlert" ng-click="imageMode.mode='pipes'" class="button-pipes" ng-class="{ 'city-selected': imageMode.mode == 'pipes' }">pipes</button>
+	<button ng-show="hide.leakAlert" ng-click="imageMode.mode='city'" class="button-city" ng-class="{ 'city-selected': imageMode.mode == 'city' }">city</button>
+	<div  ng-hide="hide.leakAlert" style="position: absolute; top: 240px; left: 540px; width: 400px; background: #fff; -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75); -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75); box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);">
 		<div style="border-bottom: 1px solid #ddd; padding: 20px; text-align: center; font-weight: bold;">Section 2134</div>
 		<div style="border-bottom: 1px solid #ddd; padding: 20px; text-align: center;">Soute Avenue NE</div>
-		<div style="border-bottom: 1px solid #ddd; padding: 20px; text-align: center;">Crew Dispatched</div>
-		<div style="border-bottom: 1px solid #ddd; padding: 20px; text-align: center;">Leak Resolved</div>
+		<div style="border-bottom: 1px solid #ddd; padding: 20px; text-align: center;" ng-hide="flow.step==='dispatch'">Crew Dispatched</div>
+		<div style="border-bottom: 1px solid #ddd; padding: 20px; text-align: center;" ng-hide="true">Leak Resolved</div>
 	</div>
 </div>
 <div class="web-rtc" ng-hide="hide.video">
