@@ -19,6 +19,7 @@
 <div ng-hide="hide.leakAlert">
 	<div>Section 2134</div>
 	<div>South Avenue NE</div>
+	<button ng-click="resetAlarm(); hide.leakAlert=true;">Reset sensor</button>
 	<button ng-click="audioDispatch()" ng-hide="dispatcher.sent">Send person</button>
 	<button ng-click="callDispatcher()" ng-show="dispatcher.sent">call person</button>
 	<button ng-click="hangup()" ng-hide="hide.video">end call</button>

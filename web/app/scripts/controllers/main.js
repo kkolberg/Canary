@@ -17,7 +17,7 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 
 	var pollingLeaks = function () {
 		ApiService.pipes.get().then(function (result) {
-			var isLeaking = result.data.pipe1.isLeaking;
+			var isLeaking = result.data.pipe1;
 
 			if (pipe1Leaking !== isLeaking) {
 				if (isLeaking) {
@@ -32,7 +32,11 @@ angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $tim
 		});
 	};
 
-	var polling = $interval(pollingLeaks, 1000);
+	var polling = $interval(pollingLeaks, 2500);
+
+	$scope.resetAlarm = function () {
+		ApiService.pipes.fix();
+	};
 
 	$scope.audioPipeBurst = function () {
 		var audio = new Audio('audio/warning.wav');
