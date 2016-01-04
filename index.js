@@ -18,7 +18,7 @@ app.get('/api/leaks', function (req, res) {
 
 app.post('/api/leaks', function (req, res) {
     console.log(req.body);
-    if (req.body.value == 1) {
+    if (req.body.value == 1 && leaks["pipe1"] === false) {
         leaks["pipe1"] = true;
         request({
             method: 'PUT',
@@ -30,7 +30,7 @@ app.post('/api/leaks', function (req, res) {
                 "hue":1000
             }
         });
-    } else if (req.body.value == 0) {
+    } else if (req.body.value == 0 && leaks["pipe1"] === true) {
         leaks["pipe1"] = false;
         request({
             method: 'PUT',
