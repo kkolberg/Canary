@@ -2,46 +2,55 @@
 
 angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $timeout, $interval, ApiService) {
 
-	var phone = ATT.rtc.Phone.getPhone();
-	var myDHS = null;
-	var accessToken = null;
-	var myDHSURL = '@attwebrtc.com';
+	
+	var projectAPIKey = "DAK533478a20a774b118a92409ed7031845";
+	var username = "user2@attwebrtc0228.kandy.io";
+	var password = "atthack123";
+	var callId = null;
+
+	var onCallIncoming = function (call) {
+		//log("Incoming call from " + call.callerNumber);
+
+		// Store the call id, so the callee has access to it.
+		callId = call.getId();
+
+		// Handle UI changes. A call is incoming.
+		acceptCall();
+	}
+
+	var acceptCall = function () {
+		// Tell Kandy to answer the call.
+		kandy.call.answerCall(callId, true);
+		// Second parameter is false because we are only doing voice calls, no video.
+
+		
+		// Handle UI changes. Call no longer incoming.
+	};
 
 
 	$scope.hangup = function () {
-		phone.hangup();
+		kandy.call.endCall(callId);
 	};
 
+$scope.fire=function(){
+	$http.post('http://54.85.250.47:8080/api/leaks',JSON.stringify({value:1}));
+};
 
-	var getAccessToken = function () {
-		$http.post('https://www.attwebrtc.com/hackathon/demo/dhs/token.php', JSON.stringify({ app_scope: "ACCOUNT_ID" })).then(function (result) {
-			accessToken = result.data;
-			phone.associateAccessToken({
-				userId: 'canaryDispatch',
-				token: accessToken.access_token,
-				success: function () {
-					phone.login({ token: accessToken.access_token });
+$scope.unfire=function(){
+	$http.post('http://54.85.250.47:8080/api/leaks',JSON.stringify({value:0}));
+};
 
-				},
-				error: function () {
-					phone.logout();
-				}
-			});
-		});
-	};
+kandy.setup({
+    // Designate HTML elements to be our stream containers.
+    remoteVideoContainer: $("#remote")[0],
+    localVideoContainer: $("#local")[0],
 
-	$http.get('https://www.attwebrtc.com/hackathon/demo/dhs/config.php').then(function (result) {
-		myDHS = result.data;
-		getAccessToken();
+    // Register listeners to call events.
+    listeners: {
+        callincoming: onCallIncoming
+    }});
 
-	});
+kandy.login(projectAPIKey, username, password, function () { }, function () { });
 
-	phone.on('call:incoming', function () {
-		phone.answer({
-			mediaType: 'video',
-			localMedia: $('#local')[0],
-			remoteMedia: $('#remote')[0]
-		});
-	});
 
 });
