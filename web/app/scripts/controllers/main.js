@@ -2,152 +2,129 @@
 
 angular.module('canaryApp').controller('MainCtrl', function ($scope, $http, $timeout, $interval, ApiService) {
 
-	var phone = ATT.rtc.Phone.getPhone();
-	var myDHS = null;
-	var accessToken = null;
-	var myDHSURL = '@attwebrtc.com';
+  var projectAPIKey = "DAK533478a20a774b118a92409ed7031845";
+  var username = "user1@attwebrtc0228.kandy.io";
+  var password = "atthack123";
 
 
 
-	$scope.setPoints = function () {
-		ApiService.score.get();
-	};
+  var onCallInitiated =function(call, callee) {
 
-    var pipe1Leaking = false;
-
-	var pollingLeaks = function () {
-		ApiService.pipes.get().then(function (result) {
-			var isLeaking = result.data.pipe1;
-
-			if (pipe1Leaking !== isLeaking) {
-				if (isLeaking) {
-					$scope.audioPipeBurst();
-					$scope.hide.leakAlert = false;
-				}
-
-				pipe1Leaking = isLeaking;
-			}
-		});
-	};
-
-	var polling = $interval(pollingLeaks, 2500);
-
-	$scope.resolve = function () {
-		ApiService.pipes.fix();
-		$scope.audioFix();
-		$scope.hide.leakAlert = true;
-
-	};
-
-	$scope.audioPipeBurst = function () {
-		var audio = new Audio('audio/warning.wav');
-		audio.play();
-	};
-
-	$scope.audioDispatch = function () {
-		var audio = new Audio('audio/herewego.wav');
-		audio.play();
-
-		$timeout(function () {
-			var audio2 = new Audio('audio/pipe.wav');
-			audio2.play();
-			$timeout(function () {
-				var audio3 = new Audio('audio/underworld - cut.mp3');
-				audio3.play();
-			}, 1000);
-
-		}, 1000);
-	};
-
-	$scope.audioFix = function () {
-		var audio = new Audio('audio/powerup.wav');
-		audio.play();
-
-		$timeout(function () {
-			var audio2 = new Audio('audio/stageclear.wav');
-			audio2.play();
-		}, 1000);
-	};
-
-	$scope.flow = { step: "dispatch" };
-
-	$scope.markArea = function () {
-		ApiService.areas.mark(true);
-	};
-
-	$scope.changeStep = function (nextStep) {
-		$scope.flow.step = nextStep;
-	}
-
-	$scope.callDispatcher = function () {
-		dailThePhone();
-		$scope.hide.video = false;
-	};
-
-	$scope.hangup = function () {
-		phone.hangup();
-		$scope.hide.video = true;
-	};
-
-	$scope.hide = {
-		video: true,
-		leakAlert: true
-	};
-
-	$scope.webrtc = {
-		error: false,
-		restarting: false
-	};
-
-	$scope.imageMode = {
-		mode: "city"
-	};
-
-	var initWebRtc = function () {
-		$http.get('https://www.attwebrtc.com/hackathon/demo/dhs/config.php').then(function (result) {
-			myDHS = result.data;
-			getAccessToken();
-		});
-	};
-
-	initWebRtc();
+    // Store the call id, so the caller has access to it.
+    callId = call.getId();
 
 
-	$scope.restartWebRTC = function () {
-		$scope.webrtc.error = false;
-		$scope.webrtc.restarting = true;
-		initWebRtc();
-	};
+  };
+
+  kandy.setup({
+    // Designate HTML elements to be our stream containers.
+    remoteVideoContainer: $("#remote")[0],
+    localVideoContainer: $("#local")[0],
+    listeners: {
+      callinitiated: onCallInitiated}
+  });
+
+// Login automatically as the application starts.
+  kandy.login(projectAPIKey, username, password, function(){}, function(){});
+
+  $scope.setPoints = function () {
+    ApiService.score.get();
+  };
+
+  var pipe1Leaking = false;
+
+  var pollingLeaks = function () {
+   // return   $scope.hide.leakAlert = false;
+    ApiService.pipes.get().then(function (result) {
+      var isLeaking = result.data.pipe1;
+
+      if (pipe1Leaking !== isLeaking) {
+        if (isLeaking) {
+          $scope.audioPipeBurst();
+          $scope.hide.leakAlert = false;
+        }
+
+        pipe1Leaking = isLeaking;
+      }
+    });
+  };
+  var callId;
+  var polling = $interval(pollingLeaks, 2500);
 
 
-	var getAccessToken = function () {
-		$http.post('https://www.attwebrtc.com/hackathon/demo/dhs/token.php', JSON.stringify({ app_scope: "ACCOUNT_ID" })).then(function (result) {
-			accessToken = result.data;
-			phone.associateAccessToken({
-				userId: 'canaryMain',
-				token: accessToken.access_token,
-				success: function () {
-					phone.login({ token: accessToken.access_token });
+  $scope.resolve = function () {
+    ApiService.pipes.fix();
+    $scope.audioFix();
+    $scope.hide.leakAlert = true;
 
-				},
-				error: function () {
-					phone.logout();
-				}
-			});
-		});
-	};
+  };
 
-	var dailThePhone = function () {
-		phone.dial({
-			destination: phone.cleanPhoneNumber("canaryDispatch" + myDHSURL),
-			mediaType: 'video',
-			localMedia: $('#local')[0],
-			remoteMedia: $('#remote')[0]
-		});
-	};
+  $scope.audioPipeBurst = function () {
+    var audio = new Audio('audio/warning.wav');
+    audio.play();
+  };
+
+  $scope.audioDispatch = function () {
+    var audio = new Audio('audio/herewego.wav');
+    audio.play();
+
+    $timeout(function () {
+      var audio2 = new Audio('audio/pipe.wav');
+      audio2.play();
+      $timeout(function () {
+        var audio3 = new Audio('audio/underworld - cut.mp3');
+        audio3.play();
+      }, 1000);
+
+    }, 1000);
+  };
+
+  $scope.audioFix = function () {
+    var audio = new Audio('audio/powerup.wav');
+    audio.play();
+
+    $timeout(function () {
+      var audio2 = new Audio('audio/stageclear.wav');
+      audio2.play();
+    }, 1000);
+  };
+
+  $scope.flow = { step: "dispatch" };
+
+  $scope.markArea = function () {
+    ApiService.areas.mark(true);
+  };
+
+  $scope.changeStep = function (nextStep) {
+    $scope.flow.step = nextStep;
+  }
+
+  $scope.callDispatcher = function () {
 
 
-	phone.on('error', function () {
-		$scope.webrtc.error = true;
-	});
+    // Tell Kandy to make a call to callee.
+    kandy.call.makeCall("user2@attwebrtc0228.kandy.io", true);
+    $scope.hide.video = false;
+  };
+
+  $scope.hangup = function () {
+    kandy.call.endCall(callId);
+    $scope.hide.video = true;
+  };
+
+  $scope.hide = {
+    video: true,
+    leakAlert: true
+  };
+
+  $scope.webrtc = {
+    error: false,
+    restarting: false
+  };
+
+  $scope.imageMode = {
+    mode: "city"
+  };
+
+
 });
